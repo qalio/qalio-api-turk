@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package turk.v1;
+
+import "proto/v1/common/utils.proto";
+
+message Transaction {
+  string id = 1;
+  string store_id = 2;
+  double amount = 3;
+  string type = 4; // e.g., "sale", "refund"
+  string timestamp = 5;
+}
+
+message POSRequest {
+  string store_id = 1;
+  Transaction transaction = 2;
+}
+
+message POSResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+service TurkService {
+  rpc ProcessTransaction(POSRequest) returns (POSResponse);
+  rpc GetFinancialReport(POSRequest) returns (POSResponse);
+}
